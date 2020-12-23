@@ -1,0 +1,171 @@
+.App {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.AppHeader {
+  @include display(flex, space-between, center);
+
+  width: 100%;
+  height: rem(40);
+
+  margin-bottom: rem(70);
+
+  & h1 {
+    @include font-roboto(rem(24), #bf616a, normal, normal, rem(28));
+  }
+
+  & button {
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  & svg {
+    width: rem(36);
+    height: rem(36);
+    color: #e5e9f0;
+  }
+}
+
+.SettingBtn {
+  & svg {
+    transition: transform 0.4s linear;
+
+    &:hover {
+      transform: rotate(90deg);
+    }
+  }
+
+  & :hover {
+    cursor: pointer;
+  }
+}
+
+.Main {
+  @include display(flex, null, center);
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0 auto;
+}
+
+.Title {
+  @include font-roboto(rem(24), #e5e9f0, normal, normal, rem(28));
+
+  margin-bottom: rem(75);
+}
+
+.Timer {
+  position: relative;
+
+  margin-bottom: rem(75);
+}
+
+.TimeBar {
+  position: relative;
+
+  width: rem(370);
+  height: rem(370);
+
+  & circle {
+    stroke-width: rem(10);
+  }
+
+  & circle:nth-child(1) {
+    stroke: rgb(228, 228, 228);
+  }
+
+  & circle:nth-child(2) {
+    transition: stroke-dashoffset 1s linear;
+    stroke: #bf616a;
+    stroke-dashoffset: 1130.9733552923256;
+  }
+}
+
+.Point {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: rem(30);
+  height: rem(30);
+
+  color: #bf616a;
+
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.25));
+}
+
+.TimerInfo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+}
+
+.Time {
+  @include font-roboto(rem(87), #88c0d0, normal, normal, rem(84));
+  margin-bottom: rem(10);
+}
+
+.Count {
+  @include font-roboto(rem(18), #e5e9f0, normal, normal, rem(21));
+}
+
+.Controls {
+  @include display(flex, space-evenly, center);
+
+  width: rem(370);
+
+  & button {
+    @include display(flex, center, center);
+
+    border: 1px solid rgba(46, 52, 64, 0.6);
+    border-radius: 100%;
+
+    background: #e5e9f0;
+
+    width: rem(70);
+    height: rem(70);
+
+    padding: 0;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  & button:nth-child(1) {
+    & svg {
+      width: rem(28);
+      height: rem(28);
+      color: #2e3440;
+    }
+  }
+
+  & button:nth-of-type(2) {
+    width: rem(110);
+    height: rem(110);
+
+    background: #bf616a;
+
+    & svg {
+      width: rem(34);
+      height: rem(40);
+      color: #e5e9f0;
+    }
+  }
+
+  & button:nth-child(3) {
+    & svg {
+      width: rem(22);
+      height: rem(22);
+      color: #2e3440;
+    }
+  }
+}

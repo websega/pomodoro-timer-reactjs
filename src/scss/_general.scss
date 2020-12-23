@@ -1,0 +1,66 @@
+*,
+:before,
+:after {
+  box-sizing: border-box;
+}
+
+:focus {
+  outline: 1px solid $current-color;
+}
+
+ul,
+li,
+ol {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  margin: 0;
+  padding: rem(45);
+  -webkit-font-smoothing: antialiased;
+  background-color: #4c566a;
+}
+
+table {
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+
+svg {
+  fill: currentColor;
+}
+
+// полоса прокрутки
+// ::-webkit-scrollbar-track {
+//   background-color: #edeff1;
+// }
+
+// ::-webkit-scrollbar-thumb {
+//   background-color: rgba(151, 151, 151, 0.45);
+//   border-radius: 1000px;
+// }
+
+// ::-webkit-scrollbar-thumb:hover {
+//   background-color: rgba(151, 151, 151, 0.85);
+//   border-radius: 1000px;
+// }
+
+// ::-webkit-scrollbar {
+//   width: 6px;
+// }

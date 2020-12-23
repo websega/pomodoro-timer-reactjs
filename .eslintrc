@@ -1,0 +1,52 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "settings": {
+    "import/resolver": "webpack"
+  },
+  "extends": [
+    "airbnb",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:jsx-a11y/recommended",
+    "plugin:sonarjs/recommended",
+    "prettier",
+    "prettier/react"
+  ],
+  "parser": "babel-eslint",
+  "plugins": ["react", "react-hooks", "jsx-a11y", "sonarjs", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-console": 1,
+    "react/jsx-fragments": 1,
+    "react/jsx-props-no-spreading": 1,
+    "react/jsx-filename-extension": 0,
+    "react/no-access-state-in-setstate": 1,
+    "jsx-a11y/click-events-have-key-events": 1,
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "packageDir": "./"
+      }
+    ],
+    "prefer-const": "warn",
+    "linebreak-style": 0,
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "no-plusplus": "off",
+    "max-len": ["warn", 80, { "ignoreUrls": true }],
+    "object-curly-spacing": ["error", "always"],
+    "react/state-in-constructor": "off",
+    "react/no-did-mount-set-state": "error",
+    "react/no-direct-mutation-state": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  }
+}
