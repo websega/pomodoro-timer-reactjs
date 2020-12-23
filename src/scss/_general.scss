@@ -32,9 +32,11 @@ html {
 
 body {
   margin: 0;
-  padding: rem(45);
+  padding: rem(40) rem(45);
   -webkit-font-smoothing: antialiased;
   background-color: #4c566a;
+
+  overflow: hidden;
 }
 
 table {
@@ -45,22 +47,3 @@ table {
 svg {
   fill: currentColor;
 }
-
-// полоса прокрутки
-// ::-webkit-scrollbar-track {
-//   background-color: #edeff1;
-// }
-
-// ::-webkit-scrollbar-thumb {
-//   background-color: rgba(151, 151, 151, 0.45);
-//   border-radius: 1000px;
-// }
-
-// ::-webkit-scrollbar-thumb:hover {
-//   background-color: rgba(151, 151, 151, 0.85);
-//   border-radius: 1000px;
-// }
-
-// ::-webkit-scrollbar {
-//   width: 6px;
-// }

@@ -21,11 +21,11 @@ const App = () => {
   const [title, setTitle] = useState('Let`s get to work!');
   const [isRunning, setIsRunnig] = useState(false);
   const [timeLeft, setTimeLeft] = useState(workingTime * 60);
+  const [isOpenSettings, setIsOpenSettings] = useState(false);
 
   const [dashOffset, setDashOffset] = useState(circumference);
 
   const intervalRef = useRef(null);
-  const circleBarRef = useRef(null);
 
   const resetTimer = () => {
     clearInterval(intervalRef.current);
@@ -77,12 +77,27 @@ const App = () => {
   const minutes = padTime(Math.floor(timeLeft / 60));
   const seconds = padTime(timeLeft - minutes * 60);
 
+  const toggleSettingsPanel = () => {
+    console.log('toggle');
+    setIsOpenSettings(!isOpenSettings);
+  };
+
+  const cls = [classes.SettingsPanel];
+
+  if (isOpenSettings) {
+    cls.push(classes.OpenSettingsPanel);
+  }
+
   return (
     <div className={classes.App}>
       <header className={classes.AppHeader}>
         <h1>PomodoRo</h1>
 
-        <button type="button" className={classes.SettingBtn}>
+        <button
+          type="button"
+          className={classes.SettingBtn}
+          onClick={toggleSettingsPanel}
+        >
           <SettingIcon />
         </button>
       </header>
@@ -100,7 +115,6 @@ const App = () => {
               strokeDasharray={circumference}
             />
             <circle
-              ref={circleBarRef}
               r={radius}
               cx="185"
               cy="185"
@@ -151,6 +165,48 @@ const App = () => {
           </button>
         </div>
       </main>
+
+      <div className={cls.join(' ')}>
+        <div className={classes.SettingsItem}>
+          <span className={classes.SettingsName}>Working time</span>
+          <div>
+            <input type="text" />
+            <span className={classes.Minutes}>min</span>
+          </div>
+        </div>
+
+        <div className={classes.SettingsItem}>
+          <span className={classes.SettingsName}>Litle break</span>
+          <div>
+            <input type="text" />
+            <span className={classes.Minutes}>min</span>
+          </div>
+        </div>
+
+        <div className={classes.SettingsItem}>
+          <span className={classes.SettingsName}>Big break</span>
+          <div>
+            <input type="text" />
+            <span className={classes.Minutes}>min</span>
+          </div>
+        </div>
+
+        <div className={classes.SettingsItem}>
+          <span className={classes.SettingsName}>Pomodoros in a round</span>
+          <div>
+            <input type="text" />
+            <span className={classes.Minutes}>min</span>
+          </div>
+        </div>
+
+        <div className={classes.SettingsItem}>
+          <span className={classes.SettingsName}>Pomodoros in a day</span>
+          <div>
+            <input type="text" />
+            <span className={classes.Minutes}>min</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
