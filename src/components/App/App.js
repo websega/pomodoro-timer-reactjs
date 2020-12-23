@@ -1,13 +1,82 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
+
 import SettingIcon from '../../assets/images/icons/settings.svg';
 import ReplayIcon from '../../assets/images/icons/replay.svg';
-// import PlayIcon from '../../assets/images/icons/play.svg';
+import PlayIcon from '../../assets/images/icons/play.svg';
 import PauseIcon from '../../assets/images/icons/pause.svg';
 import StopIcon from '../../assets/images/icons/stop.svg';
 
 import classes from './App.scss';
 
-function App() {
+const padTime = (time) => {
+  return time.toString().padStart(2, '0');
+};
+
+const radius = 180;
+const circumference = 2 * Math.PI * radius;
+const workingTime = 0.1;
+const step = circumference / (workingTime * 60);
+
+const App = () => {
+  const [title, setTitle] = useState('Let`s get to work!');
+  const [isRunning, setIsRunnig] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(workingTime * 60);
+
+  const [dashOffset, setDashOffset] = useState(circumference);
+
+  const intervalRef = useRef(null);
+  const circleBarRef = useRef(null);
+
+  const resetTimer = () => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+
+    setTitle('Let`s get to work!');
+    setIsRunnig(false);
+
+    setTimeLeft(workingTime * 60);
+    setDashOffset(circumference);
+  };
+
+  const startTimer = () => {
+    if (intervalRef.current !== null) {
+      return;
+    }
+
+    if (workingTime >= 1) {
+      setTitle(`Stay focus for ${workingTime} minutes.`);
+    } else {
+      setTitle(`Stay focus for ${workingTime * 60} seconds.`);
+    }
+
+    setIsRunnig(true);
+
+    intervalRef.current = setInterval(() => {
+      setTimeLeft((time) => {
+        if (time >= 1) {
+          setDashOffset((prevDashOffset) => prevDashOffset - step);
+          return time - 1;
+        }
+
+        resetTimer();
+        return 0;
+      });
+    }, 1000);
+  };
+
+  const stopTimer = () => {
+    if (intervalRef.current === null) return;
+
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+
+    setTitle('Keep going!');
+    setIsRunnig(false);
+  };
+
+  const minutes = padTime(Math.floor(timeLeft / 60));
+  const seconds = padTime(timeLeft - minutes * 60);
+
   return (
     <div className={classes.App}>
       <header className={classes.AppHeader}>
@@ -19,23 +88,25 @@ function App() {
       </header>
 
       <main className={classes.Main}>
-        <h2 className={classes.Title}>Stay focus for 25 minutes</h2>
+        <h2 className={classes.Title}>{title}</h2>
 
         <div className={classes.Timer}>
           <svg className={classes.TimeBar}>
             <circle
-              r="180"
+              r={radius}
               cx="185"
               cy="185"
               fill="none"
-              strokeDasharray="1130.9733552923256"
+              strokeDasharray={circumference}
             />
             <circle
-              r="180"
+              ref={circleBarRef}
+              r={radius}
               cx="185"
               cy="185"
               fill="none"
-              strokeDasharray="1130.9733552923256"
+              strokeDasharray={circumference}
+              strokeDashoffset={dashOffset}
               strokeLinecap="round"
               transform="rotate(-90,185,185)"
             />
@@ -50,9 +121,9 @@ function App() {
 
           <div className={classes.TimerInfo}>
             <div className={classes.Time}>
-              <span className="minutes">00</span>
-              <span className="colon">:</span>
-              <span className="seconds">00</span>
+              <span>{minutes}</span>
+              <span>:</span>
+              <span>{seconds}</span>
             </div>
 
             <span className={classes.Count}>6 of 10 sessions</span>
@@ -60,20 +131,28 @@ function App() {
         </div>
 
         <div className={classes.Controls}>
-          <button type="button">
+          <button type="button" onClick={resetTimer}>
             <ReplayIcon />
           </button>
-          <button type="button">
-            {/* <PlayIcon /> */}
-            <PauseIcon />
-          </button>
-          <button type="button">
+
+          {!isRunning && (
+            <button type="button" onClick={startTimer}>
+              <PlayIcon />
+            </button>
+          )}
+          {isRunning && (
+            <button type="button" onClick={stopTimer}>
+              <PauseIcon />
+            </button>
+          )}
+
+          <button type="button" onClick={stopTimer}>
             <StopIcon />
           </button>
         </div>
       </main>
     </div>
   );
-}
+};
 
 export default App;

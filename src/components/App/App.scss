@@ -54,7 +54,7 @@
 }
 
 .Title {
-  @include font-roboto(rem(24), #e5e9f0, normal, normal, rem(28));
+  @include font-roboto(rem(24), #8fbcbb, normal, normal, rem(28));
 
   margin-bottom: rem(75);
 }
@@ -71,18 +71,15 @@
   width: rem(370);
   height: rem(370);
 
-  & circle {
-    stroke-width: rem(10);
-  }
-
   & circle:nth-child(1) {
+    stroke-width: rem(10);
     stroke: rgb(228, 228, 228);
   }
 
   & circle:nth-child(2) {
+    stroke-width: rem(11);
     transition: stroke-dashoffset 1s linear;
     stroke: #bf616a;
-    stroke-dashoffset: 1130.9733552923256;
   }
 }
 
@@ -118,9 +115,9 @@
 }
 
 .Controls {
-  @include display(flex, space-evenly, center);
+  @include display(flex, space-between, center);
 
-  width: rem(370);
+  width: rem(230);
 
   & button {
     @include display(flex, center, center);
@@ -130,8 +127,8 @@
 
     background: #e5e9f0;
 
-    width: rem(70);
-    height: rem(70);
+    width: rem(60);
+    height: rem(60);
 
     padding: 0;
 
@@ -142,21 +139,21 @@
 
   & button:nth-child(1) {
     & svg {
-      width: rem(28);
-      height: rem(28);
+      width: rem(22);
+      height: rem(22);
       color: #2e3440;
     }
   }
 
   & button:nth-of-type(2) {
-    width: rem(110);
-    height: rem(110);
+    width: rem(90);
+    height: rem(90);
 
     background: #bf616a;
 
     & svg {
-      width: rem(34);
-      height: rem(40);
+      width: rem(45);
+      height: rem(45);
       color: #e5e9f0;
     }
   }
