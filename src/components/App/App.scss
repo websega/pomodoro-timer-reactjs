@@ -32,7 +32,7 @@
   z-index: z('settings-btn');
 
   & svg {
-    transition: transform 0.4s linear;
+    transition: transform 0.5s linear;
 
     &:hover {
       transform: rotate(90deg);
@@ -79,8 +79,9 @@
 
   & circle:nth-child(2) {
     stroke-width: rem(11);
-    transition: stroke-dashoffset 1s linear;
     stroke: #bf616a;
+
+    transition: stroke-dashoffset 1s linear;
   }
 }
 
@@ -182,6 +183,7 @@
   background-color: #434c5e;
 
   transform: translateX(600px);
+
   transition: transform 0.5s ease;
 
   &:before {
@@ -194,8 +196,12 @@
   }
 }
 
-.OpenSettingsPanel {
+.SettingsPanel.open {
   transform: translateX(0px);
+}
+
+.Minutes {
+  margin-right: rem(10);
 }
 
 .SettingsItem {
@@ -212,6 +218,8 @@
   & input {
     @include font-roboto(rem(18), #e5e9f0, normal, normal, rem(21));
 
+    text-align: right;
+
     width: rem(70);
     height: rem(21);
 
@@ -220,5 +228,24 @@
     border-bottom: 1px solid #e5e9f0;
 
     margin-right: rem(10);
+  }
+
+  & button {
+    background: none;
+    border: none;
+
+    transition: color 0.2s linear;
+    cursor: pointer;
+
+    & svg {
+      width: rem(16);
+      height: rem(16);
+
+      color: #e5e9f0;
+    }
+
+    &:hover svg {
+      color: #bf616a;
+    }
   }
 }
