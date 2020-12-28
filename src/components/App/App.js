@@ -20,7 +20,6 @@ const App = () => {
   const [bigBreakTime, setBigBreakTime] = useState(3); // min
   const [pomodorosInRound, setPomodorosInRound] = useState(2); // qty
   const [pomodorosInDay, setPomodorosInDay] = useState(10); // qty
-
   // timer status
   const [mode, setMode] = useState('stopped');
   const [isActive, setIsActive] = useState(false);
