@@ -1,0 +1,31 @@
+.TimeBar {
+  position: relative;
+
+  width: rem(370);
+  height: rem(370);
+
+  & circle:nth-child(1) {
+    stroke-width: rem(10);
+    stroke: rgb(228, 228, 228);
+  }
+
+  & circle:nth-child(2) {
+    stroke-width: rem(11);
+    stroke: #bf616a;
+
+    transition: stroke-dashoffset 1s linear;
+  }
+}
+
+.Point {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: rem(30);
+  height: rem(30);
+
+  color: #bf616a;
+
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.25));
+}

@@ -1,0 +1,17 @@
+.TimerInfo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+}
+
+.Time {
+  @include font-roboto(rem(87), #88c0d0, normal, normal, rem(84));
+  margin-bottom: rem(10);
+}
+
+.Count {
+  @include font-roboto(rem(18), #e5e9f0, normal, normal, rem(21));
+}

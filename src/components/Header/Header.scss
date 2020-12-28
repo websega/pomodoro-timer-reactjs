@@ -1,0 +1,40 @@
+.AppHeader {
+  @include display(flex, space-between, center);
+
+  width: 100%;
+  height: rem(40);
+
+  margin-bottom: rem(70);
+
+  & h1 {
+    @include font-roboto(rem(24), #bf616a, normal, normal, rem(28));
+  }
+
+  & button {
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  & svg {
+    width: rem(36);
+    height: rem(36);
+    color: #e5e9f0;
+  }
+}
+
+.SettingsBtn {
+  z-index: z('settings-btn');
+
+  & svg {
+    transition: transform 0.5s linear;
+
+    &:hover {
+      transform: rotate(90deg);
+    }
+  }
+
+  & :hover {
+    cursor: pointer;
+  }
+}

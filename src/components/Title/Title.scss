@@ -1,0 +1,5 @@
+.Title {
+  @include font-roboto(rem(24), #8fbcbb, normal, normal, rem(28));
+
+  margin-bottom: rem(75);
+}
