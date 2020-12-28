@@ -67,11 +67,7 @@ const App = () => {
     setTimeLeft(workingTime * 60);
     setStep(circumference / (workingTime * 60));
     setDashOffset(circumference);
-    
-    if (isActive) {
-      setTitle(`Stay focus for ${workingTime} minutes.`);
-    }
-  }, [workingTime, isActive]);
+  }, [workingTime]);
 
   // обновление на изменение времени tick
   useEffect(() => {
@@ -130,7 +126,9 @@ const App = () => {
   };
 
   const stopTimer = () => {
-    setTitle('Keep going!');
+    if (isActive) {
+      setTitle('Keep going!');
+    }
     setIsActive(false);
     setMode('stopped');
   };
