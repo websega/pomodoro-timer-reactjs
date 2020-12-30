@@ -14,21 +14,26 @@ import classes from './Controls.scss';
 const Controls = ({ isStarted, start, stop, reset }) => {
   return (
     <div className={classes.Controls}>
-      <button type="button" onClick={reset}>
+      <button type="button" onClick={reset} aria-label="Reset">
         <ReplayIcon />
       </button>
 
       {isStarted ? (
-        <button type="button" onClick={stop}>
+        <button type="button" onClick={stop} aria-label="Pause">
           <PauseIcon />
         </button>
       ) : (
-        <button type="button" onClick={start}>
+        <button type="button" onClick={start} aria-label="Start">
           <PlayIcon />
         </button>
       )}
 
-      <button type="button" onClick={stop} disabled={!isStarted}>
+      <button
+        type="button"
+        onClick={stop}
+        disabled={!isStarted}
+        aria-label="Stop"
+      >
         <StopIcon />
       </button>
     </div>

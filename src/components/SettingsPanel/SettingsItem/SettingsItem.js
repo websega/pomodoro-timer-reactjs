@@ -12,12 +12,11 @@ const SettingsItem = React.memo(
       <div className={classes.SettingsItem} key={id}>
         <span className={classes.SettingsName}>{title}</span>
         <div>
-          <button type="button" onClick={onDecrease}>
+          <button type="button" onClick={onDecrease} aria-label="Decrease">
             <MinusIcon />
           </button>
-          <input type="text" value={value} readOnly />
-          <span className={classes.Minutes}>min</span>
-          <button type="button" onClick={onIncrease}>
+          <span className={classes.Value}>{value}&nbsp;min</span>
+          <button type="button" onClick={onIncrease} aria-label="Increase">
             <PlusIcon />
           </button>
         </div>

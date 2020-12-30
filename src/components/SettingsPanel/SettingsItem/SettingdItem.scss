@@ -1,7 +1,3 @@
-.Minutes {
-  margin-right: rem(10);
-}
-
 .SettingsItem {
   @include display(flex, space-between, center);
   @include font-roboto(rem(18), #e5e9f0, normal, normal, rem(21));
@@ -11,21 +7,6 @@
 
   &:nth-child(3) {
     margin-bottom: rem(90);
-  }
-
-  & input {
-    @include font-roboto(rem(18), #e5e9f0, normal, normal, rem(21));
-
-    text-align: right;
-
-    width: rem(70);
-    height: rem(21);
-
-    background: none;
-    border: none;
-    border-bottom: 1px solid #e5e9f0;
-
-    margin-right: rem(10);
   }
 
   & button {
@@ -46,4 +27,17 @@
       color: #bf616a;
     }
   }
+}
+
+.Value {
+  @include font-roboto(rem(18), #e5e9f0, normal, normal, rem(21));
+  display: inline-block;
+  text-align: right;
+
+  width: rem(70);
+  height: rem(21);
+
+  border-bottom: 1px solid #e5e9f0;
+
+  margin-right: rem(10);
 }

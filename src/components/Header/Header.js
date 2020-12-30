@@ -22,6 +22,7 @@ const Header = React.memo(() => {
           type="button"
           className={classes.SettingsBtn}
           onClick={toggleVisibilityPanel}
+          aria-label="Settings"
         >
           <SettingIcon />
         </button>
