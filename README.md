@@ -2,6 +2,7 @@
 
 ## Pomodoro timer.
 Помидорковый таймер на ReactJs.
+Посмотреть приложение: [PomodoRo](https://pomodoro-3006e.web.app/)
 
 ##### Scripts
 - Install packages    ```npm i```
