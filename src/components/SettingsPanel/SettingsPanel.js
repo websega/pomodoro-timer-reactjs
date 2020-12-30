@@ -1,107 +1,87 @@
+/* eslint-disable sonarjs/no-unused-collection */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-/* eslint-disable no-undef */
 import React from 'react';
+import { connect } from 'react-redux';
 
-import PlusIcon from '../../assets/images/icons/add.svg';
-import MinusIcon from '../../assets/images/icons/minus.svg';
+import { increase, decrease } from '../../redux/actions/settings';
+
+import SettingsItem from './SettingsItem';
 
 import classes from './SettingsPanel.scss';
 
-const SettingsPanel = ({
-  isOpenSettings,
-  decreaseWorkTime,
-  workingTime,
-  increaseWorkTime,
-  decreaseLittleBreakTime,
-  littleBreakTime,
-  increaseLittleBreakTime,
-  decreaseBigBreakTime,
-  bigBreakTime,
-  increaseBigBreakTime,
-  decreasePomodorosInDay,
-  pomodorosInDay,
-  increasePomodorosInDay,
-  decreasePomodorosInRound,
-  pomodorosInRound,
-  increasePomodorosInRound,
-}) => {
+const settingsItems = [
+  {
+    id: 'workingTime',
+    title: 'Working time',
+  },
+  {
+    id: 'littleBreakTime',
+    title: 'Litle break',
+  },
+  {
+    id: 'bigBreakTime',
+    title: 'Big break',
+  },
+  {
+    id: 'pomodorosInRound',
+    title: 'Pomodoros in a round',
+  },
+  {
+    id: 'pomodorosInDay',
+    title: 'Pomodoros in a day',
+  },
+];
+
+const SettingsPanel = React.memo((props) => {
+  const { isOpen, onDecrease, onIncrease } = props;
   const cls = [classes.SettingsPanel];
 
-  if (isOpenSettings) {
+  if (isOpen) {
     cls.push(classes.open);
   }
 
   return (
     <div className={cls.join(' ')}>
-      <div className={classes.SettingsItem}>
-        <span className={classes.SettingsName}>Working time</span>
-        <div>
-          <button type="button" onClick={decreaseWorkTime}>
-            <MinusIcon />
-          </button>
-          <input type="text" value={workingTime} readOnly />
-          <span className={classes.Minutes}>min</span>
-          <button type="button" onClick={increaseWorkTime}>
-            <PlusIcon />
-          </button>
-        </div>
-      </div>
-
-      <div className={classes.SettingsItem}>
-        <span className={classes.SettingsName}>Litle break</span>
-        <div>
-          <button type="button" onClick={decreaseLittleBreakTime}>
-            <MinusIcon />
-          </button>
-          <input type="text" value={littleBreakTime} readOnly />
-          <span className={classes.Minutes}>min</span>
-          <button type="button" onClick={increaseLittleBreakTime}>
-            <PlusIcon />
-          </button>
-        </div>
-      </div>
-
-      <div className={classes.SettingsItem}>
-        <span className={classes.SettingsName}>Big break</span>
-        <div>
-          <button type="button" onClick={decreaseBigBreakTime}>
-            <MinusIcon />
-          </button>
-          <input type="text" value={bigBreakTime} readOnly />
-          <span className={classes.Minutes}>min</span>
-          <button type="button" onClick={increaseBigBreakTime}>
-            <PlusIcon />
-          </button>
-        </div>
-      </div>
-
-      <div className={classes.SettingsItem}>
-        <span className={classes.SettingsName}>Pomodoros in a round</span>
-        <div>
-          <button type="button" onClick={decreasePomodorosInRound}>
-            <MinusIcon />
-          </button>
-          <input type="text" value={pomodorosInRound} readOnly />
-          <button type="button" onClick={increasePomodorosInRound}>
-            <PlusIcon />
-          </button>
-        </div>
-      </div>
-
-      <div className={classes.SettingsItem}>
-        <span className={classes.SettingsName}>Pomodoros in a day</span>
-        <div>
-          <button type="button" onClick={decreasePomodorosInDay}>
-            <MinusIcon />
-          </button>
-          <input type="text" value={pomodorosInDay} readOnly />
-          <button type="button" onClick={increasePomodorosInDay}>
-            <PlusIcon />
-          </button>
-        </div>
-      </div>
+      {settingsItems.map(({ id, title }) => {
+        return (
+          <SettingsItem
+            key={id}
+            id={id}
+            title={title}
+            value={props[id]}
+            onDecrease={() => onDecrease(id)}
+            onIncrease={() => onIncrease(id)}
+          />
+        );
+      })}
     </div>
   );
+});
+
+const mapStateToProps = ({
+  settings: {
+    workingTime,
+    littleBreakTime,
+    bigBreakTime,
+    pomodorosInRound,
+    pomodorosInDay,
+  },
+}) => {
+  return {
+    workingTime,
+    littleBreakTime,
+    bigBreakTime,
+    pomodorosInRound,
+    pomodorosInDay,
+  };
 };
 
-export default SettingsPanel;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onIncrease: (id) => dispatch(increase(id)),
+    onDecrease: (id) => dispatch(decrease(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsPanel);

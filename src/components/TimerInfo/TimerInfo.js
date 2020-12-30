@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 
 import classes from './TimerInfo.scss';
@@ -6,7 +7,6 @@ const padTime = (time) => {
   return time.toString().padStart(2, '0');
 };
 
-// eslint-disable-next-line react/prop-types
 const TimerInfo = ({ timeLeft, completedPomodoros, pomodorosInDay }) => {
   const minutes = padTime(Math.floor(timeLeft / 60));
   const seconds = padTime(timeLeft - minutes * 60);
@@ -25,5 +25,4 @@ const TimerInfo = ({ timeLeft, completedPomodoros, pomodorosInDay }) => {
     </div>
   );
 };
-
 export default TimerInfo;

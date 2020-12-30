@@ -1,5 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { startTimer, stopTimer, resetTimer } from '../../redux/actions/timer';
 
 import ReplayIcon from '../../assets/images/icons/replay.svg';
 import PlayIcon from '../../assets/images/icons/play.svg';
@@ -8,29 +11,40 @@ import StopIcon from '../../assets/images/icons/stop.svg';
 
 import classes from './Controls.scss';
 
-const Controls = ({ startTimer, stopTimer, resetTimer, isActive }) => {
+const Controls = ({ isStarted, start, stop, reset }) => {
   return (
     <div className={classes.Controls}>
-      <button type="button" onClick={resetTimer}>
+      <button type="button" onClick={reset}>
         <ReplayIcon />
       </button>
 
-      {!isActive && (
-        <button type="button" onClick={startTimer}>
+      {isStarted ? (
+        <button type="button" onClick={stop}>
+          <PauseIcon />
+        </button>
+      ) : (
+        <button type="button" onClick={start}>
           <PlayIcon />
         </button>
       )}
-      {isActive && (
-        <button type="button" onClick={stopTimer}>
-          <PauseIcon />
-        </button>
-      )}
 
-      <button type="button" onClick={stopTimer}>
+      <button type="button" onClick={stop} disabled={!isStarted}>
         <StopIcon />
       </button>
     </div>
   );
 };
 
-export default Controls;
+const mapStateToProps = ({ timer: { isStarted } }) => {
+  return { isStarted };
+};
+
+const mapDispatchToProps = (dispatch, { time }) => {
+  return {
+    start: () => dispatch(startTimer(time)),
+    stop: () => dispatch(stopTimer()),
+    reset: () => dispatch(resetTimer(time)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Controls);
