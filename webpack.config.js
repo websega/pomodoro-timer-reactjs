@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const ImageminWebpackPlugin = require('imagemin-webpack-plugin').default;
 const ImageminMozjpeg = require('imagemin-mozjpeg');
@@ -28,9 +28,9 @@ const optimization = () => {
   if (isProd) {
     // Позволяет переопределить минимизатор по умолчанию, предоставляя другой один или несколько настроенных экземпляров
     config.minimizer = [
-      // Оптимизирует/минимизирует CSS (по умолчанию он использует cssnano, но можно указать собственный процессор CSS).
-      new OptimizeCssAssetsWebpackPlugin(),
-      // Для минимизации JavaScript.
+      // Этот плагин использует cssnano для оптимизации и минимизации вашего CSS
+      new CssMinimizerPlugin(),
+      // Для минимизации JavaScript
       new TerserWebpackPlugin(),
     ];
   }
