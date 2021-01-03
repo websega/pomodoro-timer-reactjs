@@ -1,8 +1,6 @@
-/* eslint-disable sonarjs/no-unused-collection */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { increase, decrease } from '../../redux/actions/settings';
 
@@ -12,24 +10,29 @@ import classes from './SettingsPanel.scss';
 
 const settingsItems = [
   {
-    id: 'workingTime',
+    settingName: 'workingTime',
     title: 'Working time',
+    isTime: true,
   },
   {
-    id: 'littleBreakTime',
+    settingName: 'littleBreakTime',
     title: 'Litle break',
+    isTime: true,
   },
   {
-    id: 'bigBreakTime',
+    settingName: 'bigBreakTime',
     title: 'Big break',
+    isTime: true,
   },
   {
-    id: 'pomodorosInRound',
+    settingName: 'pomodorosInRound',
     title: 'Pomodoros in a round',
+    isTime: false,
   },
   {
-    id: 'pomodorosInDay',
+    settingName: 'pomodorosInDay',
     title: 'Pomodoros in a day',
+    isTime: false,
   },
 ];
 
@@ -43,15 +46,15 @@ const SettingsPanel = React.memo((props) => {
 
   return (
     <div className={cls.join(' ')}>
-      {settingsItems.map(({ id, title }) => {
+      {settingsItems.map(({ settingName, title, isTime }) => {
         return (
           <SettingsItem
-            key={id}
-            id={id}
+            key={settingName}
             title={title}
-            value={props[id]}
-            onDecrease={() => onDecrease(id)}
-            onIncrease={() => onIncrease(id)}
+            value={props[settingName]}
+            isTime={isTime}
+            onDecrease={() => onDecrease(settingName)}
+            onIncrease={() => onIncrease(settingName)}
           />
         );
       })}
@@ -59,29 +62,25 @@ const SettingsPanel = React.memo((props) => {
   );
 });
 
-const mapStateToProps = ({
-  settings: {
-    workingTime,
-    littleBreakTime,
-    bigBreakTime,
-    pomodorosInRound,
-    pomodorosInDay,
-  },
-}) => {
-  return {
-    workingTime,
-    littleBreakTime,
-    bigBreakTime,
-    pomodorosInRound,
-    pomodorosInDay,
-  };
+const mapStateToProps = ({ settings }) => {
+  return settings;
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onIncrease: (id) => dispatch(increase(id)),
-    onDecrease: (id) => dispatch(decrease(id)),
+    onIncrease: (settingName) => dispatch(increase(settingName)),
+    onDecrease: (settingName) => dispatch(decrease(settingName)),
   };
+};
+
+SettingsPanel.propTypes = {
+  isOpen: PropTypes.bool,
+  onDecrease: PropTypes.func.isRequired,
+  onIncrease: PropTypes.func.isRequired,
+};
+
+SettingsPanel.defaultProps = {
+  isOpen: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsPanel);

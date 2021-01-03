@@ -11,6 +11,80 @@ const initialState = {
   dashOffset: CIRCUMFERENCE,
 };
 
+const resetTimer = (payload) => {
+  return {
+    ...initialState,
+    timeLeft: payload * 60,
+    step: CIRCUMFERENCE / (payload * 60),
+  };
+};
+
+const switchMode = (state, mode, title, payload) => {
+  let time = payload.workingTime;
+
+  if (mode === 'bigBreak') {
+    time = payload.bigBreakTime;
+  } else if (mode === 'littleBreak') {
+    time = payload.littleBreakTime;
+  }
+
+  return {
+    ...state,
+    mode,
+    title,
+    step: CIRCUMFERENCE / (time * 60),
+    timeLeft: time * 60,
+    dashOffset: CIRCUMFERENCE,
+    completedPomodoros:
+      mode === 'working'
+        ? state.completedPomodoros
+        : state.completedPomodoros + 1,
+  };
+};
+
+const updateTimer = (state, payload) => {
+  if (state.mode === 'working' && state.timeLeft === 0) {
+    const nowCompletedPomodoros = state.completedPomodoros + 1;
+
+    if (nowCompletedPomodoros === payload.pomodorosInDay) {
+      return resetTimer(payload);
+    }
+
+    if (nowCompletedPomodoros === payload.pomodorosInRound) {
+      return switchMode(state, 'bigBreak', 'Big break, warm up!', payload);
+    }
+
+    return switchMode(
+      state,
+      'littleBreak',
+      'Take a short break and carry on!',
+      payload
+    );
+  }
+
+  if (
+    (state.mode === 'littleBreak' || state.mode === 'bigBreak') &&
+    state.timeLeft === 0
+  ) {
+    if (state.completedPomodoros === payload.pomodorosInDay) {
+      return resetTimer(payload);
+    }
+
+    return switchMode(
+      state,
+      'working',
+      'Stay focused for the rest of your time.',
+      payload
+    );
+  }
+
+  return {
+    ...state,
+    timeLeft: state.timeLeft - 1,
+    dashOffset: state.dashOffset - state.step,
+  };
+};
+
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'START_TIMER':
@@ -28,54 +102,16 @@ const reducer = (state = initialState, { type, payload }) => {
         title: 'Keep going!',
       };
     case 'RESET_TIMER':
-      return {
-        ...initialState,
-        timeLeft: payload * 60,
-        step: CIRCUMFERENCE / (payload * 60),
-      };
-    case 'SWITCH_LITTLE_BREAK':
-      return {
-        ...state,
-        mode: 'littleBreak',
-        title: 'Take a short break and carry on!',
-        step: CIRCUMFERENCE / (payload * 60),
-        timeLeft: payload * 60,
-        dashOffset: CIRCUMFERENCE,
-      };
-    case 'SWITCH_BIG_BREAK':
-      return {
-        ...state,
-        mode: 'bigBreak',
-        title: 'Big break, warm up!',
-        step: CIRCUMFERENCE / (payload * 60),
-        timeLeft: payload * 60,
-        dashOffset: CIRCUMFERENCE,
-      };
-    case 'SWITCH_WORKING':
-      return {
-        ...state,
-        mode: 'working',
-        title: 'Stay focused for the rest of your time.',
-        step: CIRCUMFERENCE / (payload * 60),
-        timeLeft: payload * 60,
-        dashOffset: CIRCUMFERENCE,
-      };
-    case 'ADD_POMODORO':
-      return {
-        ...state,
-        completedPomodoros: state.completedPomodoros + 1,
-      };
-    case 'SET_STEP':
-      return {
-        ...state,
-        step: payload,
-      };
+      return resetTimer(payload);
     case 'SET_TIMER':
       return {
         ...state,
         timeLeft: payload.timeLeft,
         dashOffset: payload.dashOffset,
+        step: payload.step,
       };
+    case 'SET_TICK':
+      return updateTimer(state, payload);
 
     default:
       return state;

@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Title from '../Title';
 import Controls from '../Controls';
@@ -23,6 +23,16 @@ const Pomodoro = ({ title, workingTime }) => {
 
 const mapStateToProps = ({ timer: { title }, settings: { workingTime } }) => {
   return { title, workingTime };
+};
+
+Pomodoro.propTypes = {
+  title: PropTypes.string,
+  workingTime: PropTypes.number,
+};
+
+Pomodoro.defaultProps = {
+  title: 'Hello!',
+  workingTime: 25,
 };
 
 export default connect(mapStateToProps)(Pomodoro);
