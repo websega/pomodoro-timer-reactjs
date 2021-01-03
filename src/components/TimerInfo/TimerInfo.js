@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import classes from './TimerInfo.scss';
 
@@ -25,4 +25,11 @@ const TimerInfo = ({ timeLeft, completedPomodoros, pomodorosInDay }) => {
     </div>
   );
 };
+
+TimerInfo.propTypes = {
+  timeLeft: PropTypes.number.isRequired,
+  completedPomodoros: PropTypes.number.isRequired,
+  pomodorosInDay: PropTypes.number.isRequired,
+};
+
 export default TimerInfo;

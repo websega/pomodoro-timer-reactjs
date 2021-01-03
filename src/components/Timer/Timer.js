@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 
 import * as actions from '../../redux/actions/timer';
 import { RADIUS, CIRCUMFERENCE } from '../../constants/timer';
@@ -11,87 +11,28 @@ import TimeBar from '../TimeBar';
 
 import classes from './Timer.scss';
 
-const Timer = ({
-  bigBreakTime,
-  littleBreakTime,
-  workingTime,
-  pomodorosInDay,
-  pomodorosInRound,
-  timeLeft,
-  step,
-  dashOffset,
-  updateTimer,
-  completedPomodoros,
-  isStarted,
-  mode,
-  addPomodoro,
-  switchToLittleBreak,
-  switchToBigBreak,
-  switchToWorking,
-  updateStep,
-  reset,
-}) => {
-  // eslint-disable-next-line sonarjs/cognitive-complexity
+const Timer = ({ settings, timer, updateTick, updateTimer }) => {
+  const { workingTime, pomodorosInDay } = settings;
+  const { isStarted, dashOffset, timeLeft, completedPomodoros } = timer;
+
   useEffect(() => {
     let intervalID;
     if (isStarted) {
       intervalID = setInterval(() => {
-        updateTimer({ timeLeft: timeLeft - 1, dashOffset: dashOffset - step });
-
-        if (mode === 'working' && timeLeft === 0) {
-          const nowCompletedPomodoros = completedPomodoros + 1;
-          addPomodoro();
-
-          if (nowCompletedPomodoros === pomodorosInDay) {
-            reset(workingTime);
-          } else if (nowCompletedPomodoros === pomodorosInRound) {
-            switchToBigBreak(bigBreakTime);
-          } else {
-            switchToLittleBreak(littleBreakTime);
-            return;
-          }
-          return;
-        }
-
-        if ((mode === 'littleBreak' || mode === 'bigBreak') && timeLeft === 0) {
-          if (completedPomodoros === pomodorosInDay) {
-            reset(workingTime);
-            return;
-          }
-
-          switchToWorking(workingTime);
-        }
+        updateTick(settings);
       }, 1000);
     }
     return () => clearInterval(intervalID);
-  }, [
-    addPomodoro,
-    bigBreakTime,
-    completedPomodoros,
-    dashOffset,
-    isStarted,
-    littleBreakTime,
-    mode,
-    pomodorosInDay,
-    pomodorosInRound,
-    reset,
-    step,
-    switchToBigBreak,
-    switchToLittleBreak,
-    switchToWorking,
-    timeLeft,
-    updateTimer,
-    workingTime,
-  ]);
+  }, [settings, isStarted, updateTick]);
 
   // обновить когда изменяем рабочее время
   useEffect(() => {
     updateTimer({
       timeLeft: workingTime * 60,
       dashOffset: CIRCUMFERENCE,
+      step: CIRCUMFERENCE / (workingTime * 60),
     });
-    updateStep(CIRCUMFERENCE / (workingTime * 60));
-  }, [updateStep, updateTimer, workingTime]);
+  }, [updateTimer, workingTime]);
 
   return (
     <div className={classes.Timer}>
@@ -109,52 +50,38 @@ const Timer = ({
   );
 };
 
-const mapStateToProps = ({
-  settings: {
-    workingTime,
-    pomodorosInDay,
-    pomodorosInRound,
-    bigBreakTime,
-    littleBreakTime,
-  },
-  timer: { timeLeft, step, dashOffset, completedPomodoros, isStarted, mode },
-}) => {
+const mapStateToProps = ({ settings, timer }) => {
   return {
-    workingTime,
-    pomodorosInDay,
-    timeLeft,
-    step,
-    dashOffset,
-    completedPomodoros,
-    isStarted,
-    mode,
-    pomodorosInRound,
-    bigBreakTime,
-    littleBreakTime,
+    settings,
+    timer,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  const {
-    setTimer,
-    setStep,
-    addPomodoro,
-    switchLittleBreak,
-    switchBigBreak,
-    switchWorking,
-    resetTimer,
-  } = bindActionCreators(actions, dispatch);
+  const { setTimer, setTick } = bindActionCreators(actions, dispatch);
 
   return {
+    updateTick: (settings) => setTick(settings),
     updateTimer: (settings) => setTimer(settings),
-    updateStep: (value) => setStep(value),
-    switchToLittleBreak: (littleBreakTime) =>
-      switchLittleBreak(littleBreakTime),
-    switchToBigBreak: (bigBreakTime) => switchBigBreak(bigBreakTime),
-    switchToWorking: (workingTime) => switchWorking(workingTime),
-    reset: (workingTime) => dispatch(resetTimer(workingTime)),
-    addPomodoro,
   };
+};
+
+Timer.propTypes = {
+  settings: PropTypes.shape({
+    workingTime: PropTypes.number,
+    pomodorosInDay: PropTypes.number,
+    bigBreakTime: PropTypes.number,
+    littleBreakTime: PropTypes.number,
+    pomodorosInRound: PropTypes.number,
+  }).isRequired,
+  timer: PropTypes.shape({
+    isStarted: PropTypes.bool,
+    dashOffset: PropTypes.number,
+    timeLeft: PropTypes.number,
+    completedPomodoros: PropTypes.number,
+  }).isRequired,
+  updateTick: PropTypes.func.isRequired,
+  updateTimer: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);

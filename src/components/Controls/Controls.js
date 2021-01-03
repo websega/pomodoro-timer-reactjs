@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { startTimer, stopTimer, resetTimer } from '../../redux/actions/timer';
 
@@ -50,6 +50,17 @@ const mapDispatchToProps = (dispatch, { time }) => {
     stop: () => dispatch(stopTimer()),
     reset: () => dispatch(resetTimer(time)),
   };
+};
+
+Controls.propTypes = {
+  isStarted: PropTypes.bool,
+  start: PropTypes.func.isRequired,
+  stop: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+};
+
+Controls.defaultProps = {
+  isStarted: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);
