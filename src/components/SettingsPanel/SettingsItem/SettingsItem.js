@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import PlusIcon from '../../../assets/images/icons/add.svg';
 import MinusIcon from '../../../assets/images/icons/minus.svg';
 
-import classes from './SettingdItem.scss';
+import classes from './SettingsItem.scss';
 
 const SettingsItem = React.memo(
   ({ title, value, isTime, onDecrease, onIncrease }) => {
@@ -26,6 +26,12 @@ const SettingsItem = React.memo(
         </div>
       </div>
     );
+  },
+  (prevProps, nextProps) => {
+    if (prevProps.value !== nextProps.value) {
+      return false;
+    }
+    return true;
   }
 );
 

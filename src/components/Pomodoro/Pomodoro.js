@@ -9,30 +9,28 @@ import ErrorBoundry from '../ErrorBoundry';
 
 import classes from './Pomodoro.scss';
 
-const Pomodoro = ({ title, workingTime }) => {
+const Pomodoro = ({ title }) => {
   return (
     <main className={classes.Main}>
       <Title title={title} />
       <ErrorBoundry>
         <Timer />
       </ErrorBoundry>
-      <Controls time={workingTime} />
+      <Controls />
     </main>
   );
 };
 
-const mapStateToProps = ({ timer: { title }, settings: { workingTime } }) => {
-  return { title, workingTime };
+const mapStateToProps = ({ timer: { title } }) => {
+  return { title };
 };
 
 Pomodoro.propTypes = {
   title: PropTypes.string,
-  workingTime: PropTypes.number,
 };
 
 Pomodoro.defaultProps = {
   title: 'Hello!',
-  workingTime: 25,
 };
 
 export default connect(mapStateToProps)(Pomodoro);

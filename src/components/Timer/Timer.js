@@ -7,7 +7,7 @@ import * as actions from '../../redux/actions/timer';
 import { RADIUS, CIRCUMFERENCE } from '../../constants/timer';
 
 import TimerInfo from '../TimerInfo';
-import TimeBar from '../TimeBar';
+import Timeline from '../Timeline';
 
 import classes from './Timer.scss';
 
@@ -36,7 +36,7 @@ const Timer = ({ settings, timer, updateTick, updateTimer }) => {
 
   return (
     <div className={classes.Timer}>
-      <TimeBar
+      <Timeline
         radius={RADIUS}
         circumference={CIRCUMFERENCE}
         dashOffset={dashOffset}

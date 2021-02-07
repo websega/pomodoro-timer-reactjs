@@ -36,7 +36,7 @@ const settingsItems = [
   },
 ];
 
-const SettingsPanel = React.memo((props) => {
+const SettingsPanel = (props) => {
   const { isOpen, onDecrease, onIncrease } = props;
   const cls = [classes.SettingsPanel];
 
@@ -60,7 +60,7 @@ const SettingsPanel = React.memo((props) => {
       })}
     </div>
   );
-});
+};
 
 const mapStateToProps = ({ settings }) => {
   return settings;
