@@ -1,5 +1,5 @@
-const startTimer = (time) => {
-  return { type: 'START_TIMER', payload: time };
+const startTimer = () => {
+  return { type: 'START_TIMER' };
 };
 
 const stopTimer = () => {

@@ -11,11 +11,11 @@ const initialState = {
   dashOffset: CIRCUMFERENCE,
 };
 
-const resetTimer = (payload) => {
+const resetTimer = (workingTime) => {
   return {
     ...initialState,
-    timeLeft: payload * 60,
-    step: CIRCUMFERENCE / (payload * 60),
+    timeLeft: workingTime * 60,
+    step: CIRCUMFERENCE / (workingTime * 60),
   };
 };
 
@@ -47,7 +47,7 @@ const updateTimer = (state, payload) => {
     const nowCompletedPomodoros = state.completedPomodoros + 1;
 
     if (nowCompletedPomodoros === payload.pomodorosInDay) {
-      return resetTimer(payload);
+      return resetTimer(payload.workingTime);
     }
 
     if (nowCompletedPomodoros === payload.pomodorosInRound) {
@@ -67,7 +67,7 @@ const updateTimer = (state, payload) => {
     state.timeLeft === 0
   ) {
     if (state.completedPomodoros === payload.pomodorosInDay) {
-      return resetTimer(payload);
+      return resetTimer(payload.workingTime);
     }
 
     return switchMode(

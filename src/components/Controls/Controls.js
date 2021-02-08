@@ -46,7 +46,7 @@ const mapStateToProps = ({ timer: { isStarted } }) => {
 
 const mapDispatchToProps = (dispatch, { time }) => {
   return {
-    start: () => dispatch(startTimer(time)),
+    start: () => dispatch(startTimer()),
     stop: () => dispatch(stopTimer()),
     reset: () => dispatch(resetTimer(time)),
   };
