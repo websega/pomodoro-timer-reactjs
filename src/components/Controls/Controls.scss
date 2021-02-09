@@ -5,6 +5,10 @@
 
   margin: 0 auto;
 
+  @include mq('phone-wide') {
+    width: rem(200);
+  }
+
   & button {
     @include display(flex, center, center);
 
@@ -13,9 +17,6 @@
 
     background: #e5e9f0;
 
-    width: rem(60);
-    height: rem(60);
-
     padding: 0;
 
     &:hover {
@@ -23,11 +24,25 @@
     }
   }
 
-  & button:nth-child(1) {
+  & button:nth-child(1),
+  button:nth-child(3) {
+    width: rem(60);
+    height: rem(60);
+
+    @include mq('phone-wide') {
+      width: rem(50);
+      height: rem(50);
+    }
+
     & svg {
       width: rem(22);
       height: rem(22);
       color: #2e3440;
+
+      @include mq('phone-wide') {
+        width: rem(18);
+        height: rem(18);
+      }
     }
   }
 
@@ -37,18 +52,20 @@
 
     background: #bf616a;
 
+    @include mq('phone-wide') {
+      width: rem(80);
+      height: rem(80);
+    }
+
     & svg {
       width: rem(45);
       height: rem(45);
       color: #e5e9f0;
-    }
-  }
 
-  & button:nth-child(3) {
-    & svg {
-      width: rem(22);
-      height: rem(22);
-      color: #2e3440;
+      @include mq('phone-wide') {
+        width: rem(36);
+        height: rem(36);
+      }
     }
   }
 }

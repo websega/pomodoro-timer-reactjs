@@ -2,4 +2,8 @@
   position: relative;
 
   margin-bottom: rem(75);
+
+  @include mq('phone-wide') {
+    margin-bottom: rem(45);
+  }
 }
