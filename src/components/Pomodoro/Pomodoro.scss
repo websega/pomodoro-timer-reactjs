@@ -1,4 +1,5 @@
 .Main {
   @include display(flex, center, center);
   flex-direction: column;
+  @include center-pos();
 }
