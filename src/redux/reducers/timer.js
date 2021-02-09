@@ -42,7 +42,7 @@ const switchMode = (state, mode, title, payload) => {
   };
 };
 
-const updateTimer = (state, payload) => {
+const updateTimerEveryTick = (state, payload) => {
   if (state.mode === 'working' && state.timeLeft === 0) {
     const nowCompletedPomodoros = state.completedPomodoros + 1;
 
@@ -111,7 +111,7 @@ const reducer = (state = initialState, { type, payload }) => {
         step: payload.step,
       };
     case 'SET_TICK':
-      return updateTimer(state, payload);
+      return updateTimerEveryTick(state, payload);
     default:
       return state;
   }
