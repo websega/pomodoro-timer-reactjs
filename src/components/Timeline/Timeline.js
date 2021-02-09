@@ -8,20 +8,20 @@ const Timeline = React.memo(({ radius, circumference, dashOffset }) => {
     <svg className={classes.Timebar}>
       <circle
         r={radius}
-        cx="185"
-        cy="185"
+        cx={radius + 5}
+        cy={radius + 5}
         fill="none"
         strokeDasharray={circumference}
       />
       <circle
         r={radius}
-        cx="185"
-        cy="185"
+        cx={radius + 5}
+        cy={radius + 5}
         fill="none"
         strokeDasharray={circumference}
         strokeDashoffset={dashOffset}
         strokeLinecap="round"
-        transform="rotate(-90,185,185)"
+        transform={`rotate(-90,${radius + 5},${radius + 5})`}
       />
     </svg>
   );

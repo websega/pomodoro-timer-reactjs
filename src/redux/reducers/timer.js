@@ -112,7 +112,6 @@ const reducer = (state = initialState, { type, payload }) => {
       };
     case 'SET_TICK':
       return updateTimer(state, payload);
-
     default:
       return state;
   }

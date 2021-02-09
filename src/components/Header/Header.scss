@@ -4,8 +4,6 @@
   width: 100%;
   height: rem(40);
 
-  margin-bottom: rem(70);
-
   & h1 {
     @include font-roboto(rem(24), #bf616a, normal, normal, rem(28));
   }

@@ -1,5 +1,5 @@
 .SettingsPanel {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
@@ -14,6 +14,15 @@
   transform: translateX(600px);
 
   transition: transform 0.5s ease;
+
+  @include mq('phone-wide') {
+    width: rem(400);
+  }
+
+  @include mq('phone') {
+    width: 100%;
+    padding: rem(97) rem(25) rem(45) rem(32);
+  }
 
   &:before {
     @include pseudo();

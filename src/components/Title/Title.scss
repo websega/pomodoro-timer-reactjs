@@ -2,4 +2,9 @@
   @include font-roboto(rem(24), #8fbcbb, normal, normal, rem(28));
 
   margin-bottom: rem(75);
+  text-align: center;
+
+  @include mq('phone') {
+    margin-bottom: rem(25);
+  }
 }

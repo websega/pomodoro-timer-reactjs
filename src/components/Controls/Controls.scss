@@ -3,6 +3,8 @@
 
   width: rem(230);
 
+  margin: 0 auto;
+
   & button {
     @include display(flex, center, center);
 
