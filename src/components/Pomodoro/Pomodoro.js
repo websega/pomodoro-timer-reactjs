@@ -11,13 +11,15 @@ import classes from './Pomodoro.scss';
 
 const Pomodoro = ({ title, workingTime }) => {
   return (
-    <main className={classes.Main}>
+    <>
       <Title title={title} />
-      <ErrorBoundry>
-        <Timer />
-      </ErrorBoundry>
-      <Controls time={workingTime} />
-    </main>
+      <main className={classes.Main}>
+        <ErrorBoundry>
+          <Timer />
+        </ErrorBoundry>
+        <Controls time={workingTime} />
+      </main>
+    </>
   );
 };
 

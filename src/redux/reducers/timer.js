@@ -1,4 +1,4 @@
-import { CIRCUMFERENCE } from '../../constants/timer';
+// import { CIRCUMFERENCE } from '../../constants/timer';
 import { WORKING_TIME } from '../../constants/initialConfig';
 
 const initialState = {
@@ -7,15 +7,17 @@ const initialState = {
   isStarted: false,
   completedPomodoros: 0,
   timeLeft: WORKING_TIME * 60,
-  step: CIRCUMFERENCE / (WORKING_TIME * 60),
-  dashOffset: CIRCUMFERENCE,
+  step: (2 * Math.PI * 180) / (WORKING_TIME * 60),
+  dashOffset: 2 * Math.PI * 180,
+  circumference: 2 * Math.PI * 180,
+  radius: 180,
 };
 
 const resetTimer = (workingTime) => {
   return {
     ...initialState,
     timeLeft: workingTime * 60,
-    step: CIRCUMFERENCE / (workingTime * 60),
+    step: (2 * Math.PI * 180) / (workingTime * 60),
   };
 };
 
@@ -32,9 +34,9 @@ const switchMode = (state, mode, title, payload) => {
     ...state,
     mode,
     title,
-    step: CIRCUMFERENCE / (time * 60),
+    step: (2 * Math.PI * 180) / (time * 60),
     timeLeft: time * 60,
-    dashOffset: CIRCUMFERENCE,
+    dashOffset: 2 * Math.PI * 180,
     completedPomodoros:
       mode === 'working'
         ? state.completedPomodoros
@@ -112,6 +114,14 @@ const reducer = (state = initialState, { type, payload }) => {
       };
     case 'SET_TICK':
       return updateTimerEveryTick(state, payload);
+    case 'SET_RADIUS':
+      return {
+        ...state,
+        step: (2 * Math.PI * payload) / (WORKING_TIME * 60),
+        dashOffset: 2 * Math.PI * payload,
+        circumference: 2 * Math.PI * payload,
+        radius: payload,
+      };
     default:
       return state;
   }

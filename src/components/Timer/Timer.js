@@ -5,16 +5,41 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
 import * as actions from '../../redux/actions/timer';
-import { RADIUS, CIRCUMFERENCE } from '../../constants/timer';
 
 import TimerInfo from '../TimerInfo';
 import Timeline from '../Timeline';
 
 import classes from './Timer.scss';
 
-const Timer = ({ settings, timer, updateTick, updateTimer }) => {
+const Timer = ({ settings, timer, updateTick, updateTimer, updateRadius }) => {
   const { workingTime, pomodorosInDay } = settings;
-  const { isStarted, dashOffset, timeLeft, completedPomodoros } = timer;
+  const {
+    isStarted,
+    dashOffset,
+    timeLeft,
+    completedPomodoros,
+    radius,
+    circumference,
+  } = timer;
+
+  useEffect(() => {
+    const onResize = () => {
+      const windowWidth = window.innerWidth;
+      switch (true) {
+        case windowWidth <= 400:
+          updateRadius(140);
+          break;
+        case windowWidth > 400:
+          updateRadius(180);
+          break;
+        default:
+          break;
+      }
+    };
+    window.addEventListener('resize', onResize);
+    onResize();
+    return () => window.removeEventListener('resize', onResize);
+  }, [updateRadius]);
 
   useEffect(() => {
     let intervalID;
@@ -30,16 +55,16 @@ const Timer = ({ settings, timer, updateTick, updateTimer }) => {
   useEffect(() => {
     updateTimer({
       timeLeft: workingTime * 60,
-      dashOffset: CIRCUMFERENCE,
-      step: CIRCUMFERENCE / (workingTime * 60),
+      dashOffset: circumference,
+      step: circumference / (workingTime * 60),
     });
-  }, [updateTimer, workingTime]);
+  }, [circumference, updateTimer, workingTime]);
 
   return (
     <div className={classes.Timer}>
       <Timeline
-        radius={RADIUS}
-        circumference={CIRCUMFERENCE}
+        radius={radius}
+        circumference={circumference}
         dashOffset={dashOffset}
       />
       <TimerInfo
@@ -59,11 +84,15 @@ const mapStateToProps = ({ settings, timer }) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  const { setTimer, setTick } = bindActionCreators(actions, dispatch);
+  const { setTimer, setTick, setRadius } = bindActionCreators(
+    actions,
+    dispatch
+  );
 
   return {
     updateTick: (settings) => setTick(settings),
     updateTimer: (settings) => setTimer(settings),
+    updateRadius: (radius) => setRadius(radius),
   };
 };
 
@@ -80,9 +109,12 @@ Timer.propTypes = {
     dashOffset: PropTypes.number,
     timeLeft: PropTypes.number,
     completedPomodoros: PropTypes.number,
+    circumference: PropTypes.number,
+    radius: PropTypes.number,
   }).isRequired,
   updateTick: PropTypes.func.isRequired,
   updateTimer: PropTypes.func.isRequired,
+  updateRadius: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);

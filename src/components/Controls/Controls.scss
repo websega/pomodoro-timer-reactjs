@@ -3,8 +3,6 @@
 
   width: rem(230);
 
-  margin: 0 auto;
-
   @include mq('phone-wide') {
     width: rem(200);
   }

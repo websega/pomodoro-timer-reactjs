@@ -1,5 +1,7 @@
 .Main {
   @include display(flex, center, center);
   flex-direction: column;
-  @include center-pos();
+
+  width: 100%;
+  height: 86%;
 }
