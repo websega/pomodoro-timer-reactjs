@@ -14,12 +14,14 @@ const initialState = {
 };
 
 const resetTimer = (state, workingTime) => {
+  const circumference = 2 * Math.PI * state.radius;
+
   return {
     ...initialState,
     timeLeft: workingTime * 60,
-    step: (2 * Math.PI * state.radius) / (workingTime * 60),
-    dashOffset: 2 * Math.PI * state.radius,
-    circumference: 2 * Math.PI * state.radius,
+    step: circumference / (workingTime * 60),
+    dashOffset: circumference,
+    circumference,
     radius: state.radius,
   };
 };
@@ -117,16 +119,19 @@ const reducer = (state = initialState, { type, payload }) => {
       };
     case 'SET_TICK':
       return updateTimerEveryTick(state, payload);
-    case 'SET_RADIUS':
+    case 'SET_RADIUS': {
+      const circumference = 2 * Math.PI * payload.radius;
+
       return {
         ...state,
-        step: (2 * Math.PI * payload.radius) / (payload.workingTime * 60),
+        step: circumference / (payload.workingTime * 60),
         dashOffset:
-          2 * Math.PI * payload.radius -
+          circumference -
           state.step * (payload.workingTime * 60 - state.timeLeft),
-        circumference: 2 * Math.PI * payload.radius,
+        circumference,
         radius: payload.radius,
       };
+    }
     default:
       return state;
   }
