@@ -1,4 +1,4 @@
-// import { CIRCUMFERENCE } from '../../constants/timer';
+import { CIRCUMFERENCE, RADIUS } from '../../constants/timer';
 import { WORKING_TIME } from '../../constants/initialConfig';
 
 const initialState = {
@@ -7,17 +7,20 @@ const initialState = {
   isStarted: false,
   completedPomodoros: 0,
   timeLeft: WORKING_TIME * 60,
-  step: (2 * Math.PI * 180) / (WORKING_TIME * 60),
-  dashOffset: 2 * Math.PI * 180,
-  circumference: 2 * Math.PI * 180,
-  radius: 180,
+  step: CIRCUMFERENCE / (WORKING_TIME * 60),
+  dashOffset: CIRCUMFERENCE,
+  circumference: CIRCUMFERENCE,
+  radius: RADIUS,
 };
 
-const resetTimer = (workingTime) => {
+const resetTimer = (state, workingTime) => {
   return {
     ...initialState,
     timeLeft: workingTime * 60,
-    step: (2 * Math.PI * 180) / (workingTime * 60),
+    step: (2 * Math.PI * state.radius) / (workingTime * 60),
+    dashOffset: 2 * Math.PI * state.radius,
+    circumference: 2 * Math.PI * state.radius,
+    radius: state.radius,
   };
 };
 
@@ -34,9 +37,9 @@ const switchMode = (state, mode, title, payload) => {
     ...state,
     mode,
     title,
-    step: (2 * Math.PI * 180) / (time * 60),
+    step: (2 * Math.PI * state.radius) / (time * 60),
     timeLeft: time * 60,
-    dashOffset: 2 * Math.PI * 180,
+    dashOffset: 2 * Math.PI * state.radius,
     completedPomodoros:
       mode === 'working'
         ? state.completedPomodoros
@@ -49,7 +52,7 @@ const updateTimerEveryTick = (state, payload) => {
     const nowCompletedPomodoros = state.completedPomodoros + 1;
 
     if (nowCompletedPomodoros === payload.pomodorosInDay) {
-      return resetTimer(payload.workingTime);
+      return resetTimer(state, payload.workingTime);
     }
 
     if (nowCompletedPomodoros === payload.pomodorosInRound) {
@@ -69,7 +72,7 @@ const updateTimerEveryTick = (state, payload) => {
     state.timeLeft === 0
   ) {
     if (state.completedPomodoros === payload.pomodorosInDay) {
-      return resetTimer(payload.workingTime);
+      return resetTimer(state, payload.workingTime);
     }
 
     return switchMode(
@@ -104,7 +107,7 @@ const reducer = (state = initialState, { type, payload }) => {
         title: 'Keep going!',
       };
     case 'RESET_TIMER':
-      return resetTimer(payload);
+      return resetTimer(state, payload);
     case 'SET_TIMER':
       return {
         ...state,
@@ -117,10 +120,9 @@ const reducer = (state = initialState, { type, payload }) => {
     case 'SET_RADIUS':
       return {
         ...state,
-        step: (2 * Math.PI * payload) / (WORKING_TIME * 60),
-        dashOffset: 2 * Math.PI * payload,
-        circumference: 2 * Math.PI * payload,
-        radius: payload,
+        step: (2 * Math.PI * payload.radius) / (payload.workingTime * 60),
+        circumference: 2 * Math.PI * payload.radius,
+        radius: payload.radius,
       };
     default:
       return state;

@@ -18,8 +18,8 @@ const setTick = (settings) => {
   return { type: 'SET_TICK', payload: settings };
 };
 
-const setRadius = (radius) => {
-  return { type: 'SET_RADIUS', payload: radius };
+const setRadius = (payload) => {
+  return { type: 'SET_RADIUS', payload };
 };
 
 export { startTimer, stopTimer, resetTimer, setTimer, setTick, setRadius };

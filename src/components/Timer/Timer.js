@@ -26,11 +26,11 @@ const Timer = ({ settings, timer, updateTick, updateTimer, updateRadius }) => {
     const onResize = () => {
       const windowWidth = window.innerWidth;
       switch (true) {
-        case windowWidth <= 400:
-          updateRadius(140);
+        case windowWidth <= 481:
+          updateRadius({ radius: 140, workingTime });
           break;
-        case windowWidth > 400:
-          updateRadius(180);
+        case windowWidth > 481:
+          updateRadius({ radius: 180, workingTime });
           break;
         default:
           break;
@@ -39,7 +39,7 @@ const Timer = ({ settings, timer, updateTick, updateTimer, updateRadius }) => {
     window.addEventListener('resize', onResize);
     onResize();
     return () => window.removeEventListener('resize', onResize);
-  }, [updateRadius]);
+  }, [updateRadius, workingTime]);
 
   useEffect(() => {
     let intervalID;
@@ -92,7 +92,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateTick: (settings) => setTick(settings),
     updateTimer: (settings) => setTimer(settings),
-    updateRadius: (radius) => setRadius(radius),
+    updateRadius: (payload) => setRadius(payload),
   };
 };
 

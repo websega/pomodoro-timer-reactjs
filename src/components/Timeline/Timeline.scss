@@ -4,6 +4,11 @@
   width: rem(370);
   height: rem(370);
 
+  @include mq('phone-wide') {
+    width: rem(291);
+    height: rem(291);
+  }
+
   & circle:nth-child(1) {
     stroke-width: rem(10);
     stroke: rgb(228, 228, 228);
