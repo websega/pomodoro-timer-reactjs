@@ -111,9 +111,9 @@ const reducer = (state = initialState, { type, payload }) => {
     case 'SET_TIMER':
       return {
         ...state,
-        timeLeft: payload.timeLeft,
-        dashOffset: payload.dashOffset,
-        step: payload.step,
+        timeLeft: payload * 60,
+        dashOffset: 2 * Math.PI * state.radius,
+        step: state.circumference / (payload * 60),
       };
     case 'SET_TICK':
       return updateTimerEveryTick(state, payload);
@@ -121,6 +121,9 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         step: (2 * Math.PI * payload.radius) / (payload.workingTime * 60),
+        dashOffset:
+          2 * Math.PI * payload.radius -
+          state.step * (payload.workingTime * 60 - state.timeLeft),
         circumference: 2 * Math.PI * payload.radius,
         radius: payload.radius,
       };

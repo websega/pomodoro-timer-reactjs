@@ -53,12 +53,8 @@ const Timer = ({ settings, timer, updateTick, updateTimer, updateRadius }) => {
 
   // обновить когда изменяем рабочее время
   useEffect(() => {
-    updateTimer({
-      timeLeft: workingTime * 60,
-      dashOffset: circumference,
-      step: circumference / (workingTime * 60),
-    });
-  }, [circumference, updateTimer, workingTime]);
+    updateTimer(workingTime);
+  }, [updateTimer, workingTime]);
 
   return (
     <div className={classes.Timer}>
@@ -91,7 +87,7 @@ const mapDispatchToProps = (dispatch) => {
 
   return {
     updateTick: (settings) => setTick(settings),
-    updateTimer: (settings) => setTimer(settings),
+    updateTimer: (workingTime) => setTimer(workingTime),
     updateRadius: (payload) => setRadius(payload),
   };
 };

@@ -10,8 +10,8 @@ const resetTimer = (time) => {
   return { type: 'RESET_TIMER', payload: time };
 };
 
-const setTimer = (settings) => {
-  return { type: 'SET_TIMER', payload: settings };
+const setTimer = (workingTime) => {
+  return { type: 'SET_TIMER', payload: workingTime };
 };
 
 const setTick = (settings) => {
