@@ -69,31 +69,3 @@ $breakpoints: (
     line-height: $lh;
   }
 }
-
-// Crop text if it's long
-@mixin crop-text(
-  $padding-right: 10px,
-  $text-overflow: ellipsis,
-  $white-space: nowrap,
-  $overflow: hidden
-) {
-  padding-right: $padding-right;
-  text-overflow: $text-overflow;
-  white-space: $white-space;
-  overflow: $overflow;
-}
-
-// Center inner element with pos absolute
-@mixin center-pos() {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-// Reset button style
-@mixin reset-btn() {
-  padding: 0;
-  background-color: transparent;
-  border: none;
-}
