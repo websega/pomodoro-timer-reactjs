@@ -119,7 +119,7 @@ const reducer = (state = initialState, { type, payload }) => {
       };
     case 'SET_TICK':
       return updateTimerEveryTick(state, payload);
-    case 'SET_RADIUS': {
+    case 'RESIZE': {
       const circumference = 2 * Math.PI * payload.radius;
       const step = circumference / (payload.workingTime * 60);
 

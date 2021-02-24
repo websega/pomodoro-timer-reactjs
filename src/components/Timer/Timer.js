@@ -11,7 +11,13 @@ import Timeline from '../Timeline';
 
 import classes from './Timer.scss';
 
-const Timer = ({ settings, timer, updateTick, updateTimer, updateRadius }) => {
+const Timer = ({
+  settings,
+  timer,
+  updateTick,
+  updateTimer,
+  updateOnResize,
+}) => {
   const { workingTime, pomodorosInDay } = settings;
   const {
     isStarted,
@@ -27,10 +33,10 @@ const Timer = ({ settings, timer, updateTick, updateTimer, updateRadius }) => {
       const windowWidth = window.innerWidth;
       switch (true) {
         case windowWidth <= 481:
-          updateRadius({ radius: 140, workingTime });
+          updateOnResize({ radius: 140, workingTime });
           break;
         case windowWidth > 481:
-          updateRadius({ radius: 180, workingTime });
+          updateOnResize({ radius: 180, workingTime });
           break;
         default:
           break;
@@ -39,7 +45,7 @@ const Timer = ({ settings, timer, updateTick, updateTimer, updateRadius }) => {
     window.addEventListener('resize', onResize);
     onResize();
     return () => window.removeEventListener('resize', onResize);
-  }, [updateRadius, workingTime]);
+  }, [updateOnResize, workingTime]);
 
   useEffect(() => {
     let intervalID;
@@ -80,15 +86,12 @@ const mapStateToProps = ({ settings, timer }) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  const { setTimer, setTick, setRadius } = bindActionCreators(
-    actions,
-    dispatch
-  );
+  const { setTimer, setTick, resize } = bindActionCreators(actions, dispatch);
 
   return {
     updateTick: (settings) => setTick(settings),
     updateTimer: (workingTime) => setTimer(workingTime),
-    updateRadius: (payload) => setRadius(payload),
+    updateOnResize: (payload) => resize(payload),
   };
 };
 
@@ -110,7 +113,7 @@ Timer.propTypes = {
   }).isRequired,
   updateTick: PropTypes.func.isRequired,
   updateTimer: PropTypes.func.isRequired,
-  updateRadius: PropTypes.func.isRequired,
+  updateOnResize: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);
