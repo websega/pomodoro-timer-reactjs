@@ -121,13 +121,13 @@ const reducer = (state = initialState, { type, payload }) => {
       return updateTimerEveryTick(state, payload);
     case 'SET_RADIUS': {
       const circumference = 2 * Math.PI * payload.radius;
+      const step = circumference / (payload.workingTime * 60);
 
       return {
         ...state,
-        step: circumference / (payload.workingTime * 60),
+        step,
         dashOffset:
-          circumference -
-          state.step * (payload.workingTime * 60 - state.timeLeft),
+          circumference - step * (payload.workingTime * 60 - state.timeLeft),
         circumference,
         radius: payload.radius,
       };
