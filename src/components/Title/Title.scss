@@ -2,7 +2,13 @@
   @include font-roboto(rem(24), #8fbcbb, normal, normal, rem(28));
   text-align: center;
 
+  margin-bottom: rem(75);
+
   @include mq('phone-wide') {
     font-size: rem(18);
+  }
+
+  @include mq('phone') {
+    margin-bottom: rem(20);
   }
 }

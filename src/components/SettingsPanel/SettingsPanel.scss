@@ -1,7 +1,7 @@
 .SettingsPanel {
   position: fixed;
   top: 0;
-  right: 0;
+  right: -450px;
   bottom: 0;
 
   width: rem(450);
@@ -11,9 +11,7 @@
   z-index: z('settings-panel');
   background-color: #434c5e;
 
-  transform: translateX(600px);
-
-  transition: transform 0.5s ease;
+  transition: all 0.5s ease;
 
   @include mq('phone-wide') {
     width: rem(400);
@@ -21,7 +19,7 @@
 
   @include mq('phone') {
     width: 100%;
-    padding: rem(97) rem(25) rem(45) rem(32);
+    padding: rem(97) rem(20) rem(45) rem(20);
   }
 
   &:before {
@@ -35,5 +33,5 @@
 }
 
 .SettingsPanel.open {
-  transform: translateX(0px);
+  right: 0;
 }

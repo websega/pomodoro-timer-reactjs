@@ -31,6 +31,7 @@ const Timer = ({
   useEffect(() => {
     const onResize = () => {
       const windowWidth = window.innerWidth;
+
       switch (true) {
         case windowWidth <= 481:
           updateOnResize({ radius: 140, workingTime });
@@ -42,6 +43,7 @@ const Timer = ({
           break;
       }
     };
+
     window.addEventListener('resize', onResize);
     onResize();
     return () => window.removeEventListener('resize', onResize);

@@ -7,7 +7,11 @@
   margin-bottom: rem(40);
 
   @include mq('phone-wide') {
-    margin-bottom: rem(40);
+    margin-bottom: rem(30);
+  }
+
+  @include mq('phone') {
+    margin-bottom: rem(0);
   }
 
   & h1 {

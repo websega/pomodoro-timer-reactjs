@@ -26,7 +26,7 @@ const Header = React.memo(() => {
           <SettingIcon />
         </button>
       </header>
-      
+
       <SettingsPanel isOpen={isOpenSettings} />
     </>
   );

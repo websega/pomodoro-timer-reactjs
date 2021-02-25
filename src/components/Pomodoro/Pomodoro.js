@@ -12,8 +12,8 @@ import classes from './Pomodoro.scss';
 const Pomodoro = ({ title, workingTime }) => {
   return (
     <>
-      <Title title={title} />
       <main className={classes.Main}>
+        <Title title={title} />
         <ErrorBoundry>
           <Timer />
         </ErrorBoundry>
