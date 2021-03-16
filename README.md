@@ -4,7 +4,7 @@
 Помидорковый таймер на ReactJs.
 Посмотреть приложение: [PomodoRo](https://pomodoro-3006e.web.app/)
 
-![alt text](./preview.png)
+![alt-текст](https://imagizer.imageshack.com/img923/4961/jUt387.png "preview")
 
 ##### Scripts
 - Install packages    ```npm i```
